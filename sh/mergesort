@@ -1,0 +1,10 @@
+#!/bin/bash
+now=$(date +"%T")
+echo "Start time : $now"
+sortCmd="sort -S 50% --parallel=4 "
+for input in ./postings/*.gz; do
+    sortCmd="$sortCmd <(zcat '$input')"
+done
+eval "$sortCmd" | gzip -c > sorted.gz
+now=$(date +"%T")
+echo "End time : $now"
